@@ -1,31 +1,185 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-  <title>Agencia Web Express</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barbería Minimalista</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Archivo CSS externo -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
-<body style="font-family: Arial; text-align: center; padding: 40px;">
+<body>
 
-  <h1>🚀 Agencia Web Express</h1>
-  <h2>Tu página web lista en 24 horas</h2>
+    <!-- Header / Navegación -->
+    <header>
+        <div class="logo">
+            <h1>Barbería Minimalista</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#home">Inicio</a></li>
+                <li><a href="#services">Servicios</a></li>
+                <li><a href="#gallery">Galería</a></li>
+                <li><a href="#team">Equipo</a></li>
+                <li><a href="#booking">Reservas</a></li>
+                <li><a href="#testimonials">Testimonios</a></li>
+                <li><a href="#contact">Contacto</a></li>
+                <li><a href="#blog">Blog</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <p>Ayudamos a negocios a tener presencia online sin complicaciones.</p>
+    <!-- Inicio / Home -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h2>Bienvenido a Barbería Minimalista</h2>
+            <p>Donde estilo y elegancia se encuentran.</p>
+            <a href="#booking" class="cta-button">Reserva tu cita</a>
+        </div>
+    </section>
 
-  <hr>
+    <!-- Servicios -->
+    <section id="services">
+        <h2>Servicios</h2>
+        <div class="services-grid">
+            <article class="service-item">
+                <img src="icon-corte.svg" alt="Corte de Cabello">
+                <h3>Corte de Cabello</h3>
+                <p>Descripción breve del servicio.</p>
+                <span class="price">$25</span>
+            </article>
+            <article class="service-item">
+                <img src="icon-afeitado.svg" alt="Afeitado Clásico">
+                <h3>Afeitado Clásico</h3>
+                <p>Descripción breve del servicio.</p>
+                <span class="price">$20</span>
+            </article>
+            <article class="service-item">
+                <img src="icon-barba.svg" alt="Arreglo de Barba">
+                <h3>Arreglo de Barba</h3>
+                <p>Descripción breve del servicio.</p>
+                <span class="price">$15</span>
+            </article>
+            <article class="service-item">
+                <img src="icon-tratamiento.svg" alt="Tratamientos Capilares">
+                <h3>Tratamientos Capilares</h3>
+                <p>Descripción breve del servicio.</p>
+                <span class="price">$30</span>
+            </article>
+        </div>
+    </section>
 
-  <h3>Solicita tu página web</h3>
+    <!-- Galería / Portfolio -->
+    <section id="gallery">
+        <h2>Galería</h2>
+        <div class="gallery-carousel">
+            <!-- Imágenes de cortes y estilos -->
+            <img src="galeria1.jpg" alt="Corte 1">
+            <img src="galeria2.jpg" alt="Corte 2">
+            <img src="galeria3.jpg" alt="Corte 3">
+        </div>
+    </section>
 
-  <form>
-    <input type="text" placeholder="Nombre del negocio" required><br><br>
-    <input type="text" placeholder="Tipo de negocio" required><br><br>
-    <input type="text" placeholder="WhatsApp" required><br><br>
-    <button type="submit">Quiero mi web 🚀</button>
-  </form>
+    <!-- Equipo -->
+    <section id="team">
+        <h2>Equipo</h2>
+        <div class="team-grid">
+            <article class="team-member">
+                <img src="barbero1.jpg" alt="Nombre del Barbero">
+                <h3>Juan Pérez</h3>
+                <p>Especialista en cortes modernos y afeitados clásicos.</p>
+            </article>
+            <article class="team-member">
+                <img src="barbero2.jpg" alt="Nombre del Barbero">
+                <h3>Pedro Gómez</h3>
+                <p>Experto en arreglo de barba y estilismo personalizado.</p>
+            </article>
+        </div>
+    </section>
 
-  <hr>
+    <!-- Reservas / Booking -->
+    <section id="booking">
+        <h2>Reserva tu Cita</h2>
+        <form action="#" method="POST">
+            <label for="name">Nombre</label>
+            <input type="text" id="name" name="name" required>
 
-  <p>✔ Entrega rápida</p>
-  <p>✔ Diseño profesional</p>
-  <p>✔ Soporte personalizado</p>
+            <label for="email">Correo Electrónico</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">Teléfono</label>
+            <input type="tel" id="phone" name="phone" required>
+
+            <label for="service">Servicio</label>
+            <select id="service" name="service">
+                <option value="corte">Corte de Cabello</option>
+                <option value="afeitado">Afeitado Clásico</option>
+                <option value="barba">Arreglo de Barba</option>
+                <option value="tratamiento">Tratamiento Capilar</option>
+            </select>
+
+            <label for="date">Fecha y Hora</label>
+            <input type="datetime-local" id="date" name="date" required>
+
+            <button type="submit" class="cta-button">Agendar Cita</button>
+        </form>
+    </section>
+
+    <!-- Testimonios -->
+    <section id="testimonials">
+        <h2>Testimonios</h2>
+        <div class="testimonials-slider">
+            <blockquote>
+                <p>"Excelente servicio y atención profesional."</p>
+                <footer>- Carlos M.</footer>
+            </blockquote>
+            <blockquote>
+                <p>"Mi corte nunca había quedado tan perfecto. ¡Recomendado!"</p>
+                <footer>- Luis A.</footer>
+            </blockquote>
+        </div>
+    </section>
+
+    <!-- Contacto / Ubicación -->
+    <section id="contact">
+        <h2>Contacto</h2>
+        <div class="contact-info">
+            <p>Dirección: Calle Principal 123, Ciudad</p>
+            <p>Teléfono: +502 1234 5678</p>
+            <p>Email: contacto@barberiaminimalista.com</p>
+            <p>Horario: Lunes a Sábado 9:00 - 19:00</p>
+        </div>
+        <div class="map">
+            <!-- Aquí se puede insertar un iframe de Google Maps -->
+        </div>
+        <div class="social-media">
+            <a href="#">Instagram</a>
+            <a href="#">Facebook</a>
+        </div>
+    </section>
+
+    <!-- Blog / Tips -->
+    <section id="blog">
+        <h2>Blog & Tips</h2>
+        <div class="blog-grid">
+            <article class="blog-post">
+                <h3>Consejo de Cuidado Capilar</h3>
+                <p>Mini descripción del tip o artículo.</p>
+            </article>
+            <article class="blog-post">
+                <h3>Estilos Modernos de Barba</h3>
+                <p>Mini descripción del tip o artículo.</p>
+            </article>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Barbería Minimalista. Todos los derechos reservados.</p>
+        <div class="footer-social">
+            <a href="#">Instagram</a>
+            <a href="#">Facebook</a>
+        </div>
+    </footer>
 
 </body>
 </html>
