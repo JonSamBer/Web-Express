@@ -1,326 +1,214 @@
-/* ===============================
-   RESET Y ESTILOS BASE
-=============================== */
+/* 1. Reset y Estilos Globales */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-html {
-    font-size: 16px;
+body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #fff;
     scroll-behavior: smooth;
 }
 
-body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    color: #1a1a1a;
-    background-color: #fff;
-    line-height: 1.6;
+h1, h2, h3 {
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
-/* ===============================
-   ENLACES
-=============================== */
-a {
-    text-decoration: none;
-    color: inherit;
+section {
+    padding: 80px 10%;
 }
 
-a.cta-button {
-    display: inline-block;
-    background-color: #000;
-    color: #fff;
-    padding: 0.75rem 1.5rem;
-    border-radius: 5px;
-    transition: all 0.3s ease;
+img {
+    max-width: 100%;
+    filter: grayscale(20%);
+    transition: 0.3s;
 }
 
-a.cta-button:hover {
-    background-color: #444;
-}
-
-/* ===============================
-   HEADER / NAV
-=============================== */
+/* 2. Header y Navegación */
 header {
-    position: sticky;
-    top: 0;
-    background-color: #fff;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
-    border-bottom: 1px solid #e0e0e0;
+    padding: 20px 10%;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    position: sticky;
+    top: 0;
     z-index: 1000;
 }
 
-header .logo h1 {
-    font-size: 1.5rem;
+.logo h1 {
+    font-size: 1.2rem;
     font-weight: 700;
 }
 
-header nav ul {
+nav ul {
     display: flex;
     list-style: none;
-    gap: 1.5rem;
 }
 
-header nav ul li a {
-    font-weight: 500;
-    transition: color 0.3s;
+nav ul li {
+    margin-left: 20px;
 }
 
-header nav ul li a:hover {
-    color: #555;
+nav ul li a {
+    text-decoration: none;
+    color: #666;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    transition: 0.3s;
 }
 
-/* ===============================
-   HERO / INICIO
-=============================== */
+nav ul li a:hover {
+    color: #000;
+}
+
+/* 3. Hero Section */
 .hero {
-    height: 90vh;
-    background: url('hero-barberia.jpg') center/cover no-repeat;
+    height: 80vh;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    color: #fff;
+    background: #f9f9f9; /* Puedes añadir una imagen de fondo sutil aquí */
 }
 
 .hero-content h2 {
     font-size: 2.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 10px;
 }
 
-.hero-content p {
-    font-size: 1.25rem;
-    margin-bottom: 1.5rem;
+.cta-button {
+    display: inline-block;
+    padding: 12px 30px;
+    background: #000;
+    color: #fff;
+    text-decoration: none;
+    margin-top: 20px;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    transition: 0.3s;
 }
 
-/* ===============================
-   SECCIONES GENERALES
-=============================== */
-section {
-    padding: 4rem 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
+.cta-button:hover {
+    background: #333;
 }
 
-section h2 {
-    text-align: center;
-    font-size: 2rem;
-    margin-bottom: 2rem;
-    font-weight: 700;
-}
-
-/* ===============================
-   SERVICIOS
-=============================== */
-.services-grid {
+/* 4. Grillas (Servicios, Equipo, Blog) */
+.services-grid, .team-grid, .blog-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    margin-top: 40px;
 }
 
-.service-item {
+.service-item, .team-member, .blog-post {
     text-align: center;
-    padding: 1.5rem;
-    border: 1px solid #e0e0e0;
-    border-radius: 10px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.service-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    padding: 20px;
+    border: 1px solid #f0f0f0;
 }
 
 .service-item img {
-    width: 60px;
-    margin-bottom: 1rem;
+    width: 50px;
+    margin-bottom: 15px;
 }
 
-.service-item h3 {
-    margin-bottom: 0.5rem;
-    font-size: 1.25rem;
-}
-
-.service-item p {
-    margin-bottom: 0.5rem;
-    color: #555;
-}
-
-.service-item .price {
-    font-weight: 700;
+.price {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
     color: #000;
 }
 
-/* ===============================
-   GALERÍA
-=============================== */
+/* 5. Galería */
 .gallery-carousel {
     display: flex;
+    gap: 15px;
     overflow-x: auto;
-    gap: 1rem;
-    scroll-snap-type: x mandatory;
+    padding-bottom: 20px;
 }
 
 .gallery-carousel img {
-    width: 100%;
-    max-width: 400px;
-    border-radius: 10px;
-    scroll-snap-align: center;
-    flex-shrink: 0;
-}
-
-/* ===============================
-   EQUIPO
-=============================== */
-.team-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
-    text-align: center;
-}
-
-.team-member img {
-    width: 150px;
-    height: 150px;
+    width: 300px;
+    height: 400px;
     object-fit: cover;
-    border-radius: 50%;
-    margin-bottom: 1rem;
 }
 
-/* ===============================
-   FORMULARIO DE RESERVAS
-=============================== */
-form {
-    max-width: 500px;
+/* 6. Formulario de Reservas */
+#booking form {
+    max-width: 600px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
 }
 
-form input, form select, form button {
-    padding: 0.75rem 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1rem;
+label {
+    font-size: 0.8rem;
+    margin-bottom: 5px;
+    text-transform: uppercase;
 }
 
-form button {
-    background-color: #000;
+input, select, textarea {
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    font-family: inherit;
+}
+
+/* 7. Testimonios */
+#testimonials {
+    background: #000;
     color: #fff;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-form button:hover {
-    background-color: #444;
-}
-
-/* ===============================
-   TESTIMONIOS
-=============================== */
-.testimonials-slider {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
     text-align: center;
 }
 
-.testimonials-slider blockquote {
+blockquote {
     font-style: italic;
-    color: #555;
-    border-left: 3px solid #000;
-    padding-left: 1rem;
+    font-size: 1.2rem;
+    max-width: 800px;
+    margin: 0 auto 30px;
 }
 
-/* ===============================
-   CONTACTO
-=============================== */
-.contact-info p {
-    margin-bottom: 0.5rem;
-    text-align: center;
+blockquote footer {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    opacity: 0.7;
 }
 
-.map {
-    margin-top: 2rem;
-    height: 300px;
-    background-color: #e0e0e0; /* placeholder para iframe */
-    border-radius: 10px;
-}
-
-.social-media {
-    margin-top: 1rem;
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-}
-
-.social-media a {
-    color: #000;
-    font-weight: 500;
-}
-
-/* ===============================
-   BLOG
-=============================== */
-.blog-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 2rem;
-}
-
-.blog-post {
-    padding: 1rem;
-    border: 1px solid #e0e0e0;
-    border-radius: 10px;
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.blog-post:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-}
-
-/* ===============================
-   FOOTER
-=============================== */
+/* 8. Footer */
 footer {
+    padding: 40px 10%;
     text-align: center;
-    padding: 2rem;
-    background-color: #f8f8f8;
-    margin-top: 4rem;
-}
-
-footer p {
-    margin-bottom: 1rem;
-    color: #555;
+    background: #fff;
+    border-top: 1px solid #eee;
+    font-size: 0.8rem;
 }
 
 .footer-social a {
-    margin: 0 0.5rem;
-    font-weight: 500;
-    color: #000;
+    margin: 0 10px;
+    color: #666;
+    text-decoration: none;
 }
 
-/* ===============================
-   RESPONSIVE
-=============================== */
+/* Responsividad */
 @media (max-width: 768px) {
     header {
         flex-direction: column;
-        gap: 1rem;
     }
-
-    .hero-content h2 {
-        font-size: 2rem;
+    nav ul {
+        margin-top: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
     }
-
-    .hero-content p {
-        font-size: 1rem;
+    nav ul li {
+        margin: 5px 10px;
+    }
+    section {
+        padding: 50px 5%;
     }
 }
