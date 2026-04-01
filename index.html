@@ -1,158 +1,1187 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tu Negocio</title>
-
-  <!-- Tailwind CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Configuración Tailwind -->
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: '#2563eb',
-            secondary: '#7c3aed',
-            accent: '#06b6d4'
-          },
-          fontFamily: {
-            sans: ['Inter', 'sans-serif']
-          }
-        }
-      }
-    }
-  </script>
-
-  <!-- Fuente -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
-  <!-- CSS personalizado -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NOBLE — Barbería de Élite</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0a0a;
+      --off-black: #111111;
+      --charcoal: #1c1c1c;
+      --dark-gray: #2a2a2a;
+      --mid-gray: #555;
+      --light-gray: #aaa;
+      --off-white: #f5f3ef;
+      --white: #ffffff;
+      --gold: #c9a96e;
+      --gold-light: #e8d5b0;
+      --gold-dark: #a07840;
+      --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    html { scroll-behavior: smooth; }
+
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Montserrat', sans-serif;
+      background: var(--off-white);
+      color: var(--black);
+      overflow-x: hidden;
+      font-weight: 300;
+      cursor: none;
     }
 
-    .fade-in {
-      animation: fadeIn 1s ease-in-out;
+    /* CUSTOM CURSOR */
+    .cursor {
+      width: 10px; height: 10px;
+      background: var(--gold);
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.3s, height 0.3s, background 0.3s;
+    }
+    .cursor-follower {
+      width: 36px; height: 36px;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.12s ease, width 0.3s, height 0.3s;
+      opacity: 0.6;
+    }
+    .cursor.hover { width: 20px; height: 20px; }
+    .cursor-follower.hover { width: 60px; height: 60px; opacity: 0.3; }
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--off-black); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%;
+      height: 70px;
+      background: rgba(10,10,10,0);
+      transition: background var(--transition), backdrop-filter var(--transition), height var(--transition);
+    }
+    nav.scrolled {
+      background: rgba(10,10,10,0.96);
+      backdrop-filter: blur(10px);
+      height: 60px;
+      border-bottom: 1px solid rgba(201,169,110,0.15);
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem; font-weight: 600;
+      color: var(--white); letter-spacing: 0.25em;
+      text-decoration: none; text-transform: uppercase;
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      color: rgba(255,255,255,0.75); font-size: 0.7rem;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      text-decoration: none; transition: color var(--transition);
+      position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px;
+      background: var(--gold); transition: width var(--transition);
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta {
+      background: transparent; border: 1px solid var(--gold);
+      color: var(--gold) !important; padding: 8px 20px;
+      font-size: 0.65rem !important; letter-spacing: 0.2em !important;
+      cursor: none; transition: background var(--transition), color var(--transition) !important;
+    }
+    .nav-cta::after { display: none !important; }
+    .nav-cta:hover { background: var(--gold) !important; color: var(--black) !important; }
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: none; padding: 4px;
+    }
+    .hamburger span {
+      width: 24px; height: 1px;
+      background: var(--white); transition: var(--transition);
+    }
+    .mobile-menu {
+      display: none; position: fixed; inset: 0;
+      background: var(--off-black); z-index: 99;
+      flex-direction: column; align-items: center; justify-content: center;
+      gap: 2.5rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem; color: var(--off-white);
+      text-decoration: none; letter-spacing: 0.1em;
+      transition: color var(--transition);
+    }
+    .mobile-menu a:hover { color: var(--gold); }
+    .close-menu {
+      position: absolute; top: 20px; right: 5%;
+      font-size: 2rem; color: var(--light-gray);
+      cursor: none; background: none; border: none;
     }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    /* HERO */
+    #inicio {
+      height: 100vh; min-height: 600px;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      background: var(--off-black);
     }
-
-    .card-hover:hover {
-      transform: translateY(-5px);
-      transition: all 0.3s ease;
-    }
-
-    .btn-primary {
-      background: linear-gradient(to right, #2563eb, #7c3aed);
-      color: white;
-      transition: all 0.3s ease;
-    }
-
-    .btn-primary:hover {
-      opacity: 0.9;
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1800&q=80') center/cover no-repeat;
+      opacity: 0.35;
       transform: scale(1.05);
+      animation: heroZoom 12s ease-in-out infinite alternate;
+    }
+    @keyframes heroZoom {
+      from { transform: scale(1.05); }
+      to { transform: scale(1.12); }
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(10,10,10,0.2) 0%, rgba(10,10,10,0.7) 100%);
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      text-align: center; padding: 0 5%;
+      max-width: 780px;
+    }
+    .hero-eyebrow {
+      font-size: 0.65rem; letter-spacing: 0.4em;
+      color: var(--gold); text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 1s 0.2s both;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(4rem, 9vw, 8rem);
+      font-weight: 300; line-height: 0.9;
+      color: var(--white); letter-spacing: 0.05em;
+      margin-bottom: 1.8rem;
+      animation: fadeUp 1s 0.4s both;
+    }
+    .hero-title em { font-style: italic; color: var(--gold-light); }
+    .hero-subtitle {
+      font-size: 0.85rem; letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.6); line-height: 2;
+      margin-bottom: 3rem;
+      animation: fadeUp 1s 0.6s both;
+    }
+    .hero-actions {
+      display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap;
+      animation: fadeUp 1s 0.8s both;
+    }
+    .btn-primary {
+      background: var(--gold); color: var(--black);
+      padding: 14px 36px; border: none; cursor: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      text-decoration: none; display: inline-block;
+      transition: background var(--transition), transform var(--transition);
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .btn-outline {
+      background: transparent; color: var(--white);
+      padding: 13px 36px; border: 1px solid rgba(255,255,255,0.4);
+      cursor: none; font-family: 'Montserrat', sans-serif;
+      font-size: 0.65rem; font-weight: 400;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      text-decoration: none; display: inline-block;
+      transition: border-color var(--transition), color var(--transition), transform var(--transition);
+    }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+    .hero-scroll {
+      position: absolute; bottom: 2.5rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      color: rgba(255,255,255,0.4); font-size: 0.6rem; letter-spacing: 0.2em;
+      animation: fadeUp 1s 1.2s both;
+    }
+    .scroll-line {
+      width: 1px; height: 50px; background: var(--gold);
+      animation: scrollPulse 2s ease-in-out infinite;
+      transform-origin: top;
+    }
+    @keyframes scrollPulse {
+      0%,100% { transform: scaleY(1); opacity: 1; }
+      50% { transform: scaleY(0.5); opacity: 0.3; }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* SECTION COMMONS */
+    section { padding: 120px 5%; }
+    .section-label {
+      font-size: 0.6rem; letter-spacing: 0.4em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1rem; display: block;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.4rem, 4vw, 3.8rem);
+      font-weight: 300; line-height: 1.1; color: var(--off-black);
+    }
+    .section-title.light { color: var(--white); }
+    .divider {
+      width: 50px; height: 1px;
+      background: var(--gold); margin: 2rem 0;
+    }
+    .divider.center { margin: 2rem auto; }
+    .section-intro {
+      font-size: 0.85rem; line-height: 2; color: var(--mid-gray);
+      max-width: 560px;
+    }
+    .reveal {
+      opacity: 0; transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* SERVICIOS */
+    #servicios { background: var(--white); }
+    .services-header { max-width: 1200px; margin: 0 auto 5rem; }
+    .services-grid {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2px;
+    }
+    .service-card {
+      background: var(--off-white); padding: 3rem 2.5rem;
+      position: relative; overflow: hidden;
+      transition: background var(--transition), transform var(--transition);
+      cursor: none;
+    }
+    .service-card::before {
+      content: ''; position: absolute;
+      bottom: 0; left: 0; width: 100%; height: 3px;
+      background: var(--gold); transform: scaleX(0);
+      transform-origin: left; transition: transform var(--transition);
+    }
+    .service-card:hover { background: var(--white); transform: translateY(-4px); }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-icon {
+      font-size: 2.2rem; margin-bottom: 1.5rem; display: block;
+      transition: transform var(--transition);
+    }
+    .service-card:hover .service-icon { transform: scale(1.1); }
+    .service-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem; font-weight: 400; margin-bottom: 0.8rem;
+      color: var(--off-black);
+    }
+    .service-desc {
+      font-size: 0.78rem; line-height: 1.9;
+      color: var(--mid-gray); margin-bottom: 1.5rem;
+    }
+    .service-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem; color: var(--gold); font-weight: 300;
+    }
+
+    /* GALERÍA */
+    #galeria { background: var(--off-black); padding: 120px 0; }
+    .gallery-header { padding: 0 5%; max-width: 1200px; margin: 0 auto 4rem; }
+    .gallery-header .section-title { color: var(--white); }
+    .gallery-header .section-intro { color: rgba(255,255,255,0.45); }
+    .carousel-wrapper { position: relative; overflow: hidden; }
+    .carousel-track {
+      display: flex; gap: 2px;
+      transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .carousel-slide {
+      min-width: calc(33.333% - 1.5px);
+      aspect-ratio: 3/4; overflow: hidden;
+      position: relative; flex-shrink: 0;
+    }
+    .carousel-slide img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.7s ease;
+    }
+    .carousel-slide:hover img { transform: scale(1.05); }
+    .carousel-slide-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(10,10,10,0.7) 0%, transparent 50%);
+      opacity: 0; transition: opacity var(--transition);
+      display: flex; align-items: flex-end; padding: 1.5rem;
+    }
+    .carousel-slide:hover .carousel-slide-overlay { opacity: 1; }
+    .carousel-slide-label {
+      color: var(--white); font-size: 0.7rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+    }
+    .carousel-controls {
+      display: flex; align-items: center; justify-content: center;
+      gap: 2rem; padding: 3rem 5% 0;
+    }
+    .carousel-btn {
+      width: 50px; height: 50px; border: 1px solid rgba(255,255,255,0.2);
+      background: transparent; color: var(--white); font-size: 1.2rem;
+      cursor: none; transition: border-color var(--transition), background var(--transition);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .carousel-btn:hover { border-color: var(--gold); background: rgba(201,169,110,0.1); }
+    .carousel-dots { display: flex; gap: 0.5rem; }
+    .dot {
+      width: 6px; height: 6px; background: rgba(255,255,255,0.25);
+      border-radius: 50%; cursor: none; transition: background var(--transition), transform var(--transition);
+    }
+    .dot.active { background: var(--gold); transform: scale(1.4); }
+
+    /* EQUIPO */
+    #equipo { background: var(--off-white); }
+    .team-header { max-width: 1200px; margin: 0 auto 5rem; }
+    .team-grid {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 3rem;
+    }
+    .team-card { text-align: center; cursor: none; }
+    .team-img-wrap {
+      position: relative; overflow: hidden;
+      aspect-ratio: 3/4; margin-bottom: 1.8rem;
+    }
+    .team-img-wrap img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.7s ease;
+      filter: grayscale(20%);
+    }
+    .team-card:hover .team-img-wrap img { transform: scale(1.04); filter: grayscale(0%); }
+    .team-img-overlay {
+      position: absolute; inset: 0;
+      background: rgba(10,10,10,0.5);
+      opacity: 0; transition: opacity var(--transition);
+      display: flex; align-items: center; justify-content: center; gap: 1rem;
+    }
+    .team-card:hover .team-img-overlay { opacity: 1; }
+    .team-social {
+      width: 40px; height: 40px; border: 1px solid rgba(255,255,255,0.5);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--white); font-size: 0.9rem; text-decoration: none;
+      transition: border-color var(--transition), background var(--transition);
+    }
+    .team-social:hover { border-color: var(--gold); background: rgba(201,169,110,0.2); }
+    .team-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem; font-weight: 400;
+      color: var(--off-black); margin-bottom: 0.3rem;
+    }
+    .team-role {
+      font-size: 0.65rem; letter-spacing: 0.2em;
+      color: var(--gold); text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+    .team-bio { font-size: 0.78rem; line-height: 1.9; color: var(--mid-gray); }
+
+    /* RESERVAS */
+    #reservas {
+      background: var(--off-black);
+      position: relative; overflow: hidden;
+    }
+    #reservas::before {
+      content: 'NOBLE';
+      position: absolute; right: -2%; top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18vw; font-weight: 300;
+      color: rgba(255,255,255,0.02);
+      letter-spacing: 0.1em; white-space: nowrap;
+    }
+    .booking-wrapper {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 6rem; align-items: center;
+    }
+    .booking-info .section-title { color: var(--white); }
+    .booking-info .section-intro { color: rgba(255,255,255,0.45); margin-top: 1.5rem; }
+    .booking-features { margin-top: 3rem; display: flex; flex-direction: column; gap: 1.2rem; }
+    .booking-feature {
+      display: flex; align-items: flex-start; gap: 1rem;
+    }
+    .feature-dot {
+      width: 8px; height: 8px; background: var(--gold);
+      border-radius: 50%; flex-shrink: 0; margin-top: 5px;
+    }
+    .feature-text { font-size: 0.78rem; line-height: 1.8; color: rgba(255,255,255,0.5); }
+    .booking-form { position: relative; z-index: 2; }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+    label {
+      display: block; font-size: 0.6rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: rgba(255,255,255,0.4);
+      margin-bottom: 0.5rem;
+    }
+    input, select, textarea {
+      width: 100%; background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--white); padding: 14px 16px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.8rem; font-weight: 300;
+      outline: none; transition: border-color var(--transition), background var(--transition);
+      cursor: none;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--gold);
+      background: rgba(201,169,110,0.04);
+    }
+    select option { background: var(--off-black); color: var(--white); }
+    textarea { resize: none; height: 90px; }
+    .btn-form {
+      width: 100%; background: var(--gold); color: var(--black);
+      padding: 16px; border: none; cursor: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      margin-top: 0.5rem;
+      transition: background var(--transition), transform var(--transition);
+    }
+    .btn-form:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+    /* TESTIMONIOS */
+    #testimonios { background: var(--white); }
+    .testimonials-header { max-width: 1200px; margin: 0 auto 5rem; text-align: center; }
+    .testimonials-grid {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2px;
+    }
+    .testimonial-card {
+      background: var(--off-white); padding: 3rem 2.5rem;
+      position: relative; transition: background var(--transition);
+    }
+    .testimonial-card:hover { background: #eeece8; }
+    .testimonial-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 4rem; line-height: 1; color: var(--gold);
+      margin-bottom: 0.5rem; font-style: italic;
+    }
+    .testimonial-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem; font-style: italic; line-height: 1.8;
+      color: var(--off-black); margin-bottom: 2rem;
+    }
+    .testimonial-stars { color: var(--gold); font-size: 0.75rem; letter-spacing: 0.1em; margin-bottom: 1.2rem; }
+    .testimonial-author { display: flex; align-items: center; gap: 1rem; }
+    .author-avatar {
+      width: 48px; height: 48px; border-radius: 50%;
+      object-fit: cover; filter: grayscale(20%);
+    }
+    .author-name {
+      font-size: 0.8rem; font-weight: 600; color: var(--off-black);
+      margin-bottom: 0.2rem;
+    }
+    .author-since { font-size: 0.68rem; color: var(--light-gray); letter-spacing: 0.1em; }
+
+    /* BLOG */
+    #blog { background: var(--off-white); }
+    .blog-header { max-width: 1200px; margin: 0 auto 5rem; }
+    .blog-grid {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 3rem;
+    }
+    .blog-card { cursor: none; }
+    .blog-img {
+      width: 100%; aspect-ratio: 16/10; object-fit: cover;
+      margin-bottom: 1.5rem; transition: transform 0.6s ease;
+      overflow: hidden; display: block;
+    }
+    .blog-img-wrap { overflow: hidden; }
+    .blog-card:hover .blog-img { transform: scale(1.04); }
+    .blog-category {
+      font-size: 0.6rem; letter-spacing: 0.25em;
+      color: var(--gold); text-transform: uppercase;
+      margin-bottom: 0.7rem; display: block;
+    }
+    .blog-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem; font-weight: 400;
+      color: var(--off-black); margin-bottom: 0.8rem; line-height: 1.3;
+    }
+    .blog-excerpt { font-size: 0.78rem; line-height: 1.9; color: var(--mid-gray); margin-bottom: 1.2rem; }
+    .blog-link {
+      font-size: 0.65rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--off-black);
+      text-decoration: none; border-bottom: 1px solid var(--gold);
+      padding-bottom: 2px; transition: color var(--transition);
+    }
+    .blog-link:hover { color: var(--gold); }
+
+    /* CONTACTO */
+    #contacto { background: var(--off-black); padding: 120px 5%; }
+    .contact-wrapper {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1.2fr;
+      gap: 6rem; align-items: start;
+    }
+    .contact-info .section-title { color: var(--white); }
+    .contact-items { margin-top: 3rem; display: flex; flex-direction: column; gap: 2.5rem; }
+    .contact-item { display: flex; gap: 1.5rem; align-items: flex-start; }
+    .contact-icon {
+      width: 44px; height: 44px; border: 1px solid rgba(201,169,110,0.3);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold); font-size: 1rem; flex-shrink: 0;
+    }
+    .contact-item-title {
+      font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(255,255,255,0.35); margin-bottom: 0.4rem;
+    }
+    .contact-item-text {
+      font-size: 0.85rem; color: rgba(255,255,255,0.7); line-height: 1.7;
+    }
+    .social-row { display: flex; gap: 0.8rem; margin-top: 3rem; }
+    .social-link {
+      width: 40px; height: 40px; border: 1px solid rgba(255,255,255,0.15);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.5); text-decoration: none;
+      transition: border-color var(--transition), color var(--transition), background var(--transition);
+      font-size: 0.85rem;
+    }
+    .social-link:hover { border-color: var(--gold); color: var(--gold); background: rgba(201,169,110,0.08); }
+    .map-container {
+      width: 100%; height: 400px; overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    .map-container iframe { width: 100%; height: 100%; border: none; filter: grayscale(80%) invert(90%) contrast(80%); }
+
+    /* FOOTER */
+    footer {
+      background: var(--black);
+      border-top: 1px solid rgba(201,169,110,0.1);
+      padding: 3rem 5%;
+    }
+    .footer-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1.5rem;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem; color: var(--white); letter-spacing: 0.3em;
+    }
+    .footer-logo span { color: var(--gold); }
+    .footer-copy {
+      font-size: 0.65rem; color: rgba(255,255,255,0.25);
+      letter-spacing: 0.1em; text-align: center;
+    }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a {
+      font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: rgba(255,255,255,0.3); text-decoration: none;
+      transition: color var(--transition);
+    }
+    .footer-links a:hover { color: var(--gold); }
+
+    /* NOTIFICATION */
+    .notification {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 9999;
+      background: var(--gold); color: var(--black);
+      padding: 1rem 1.5rem; font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 0.1em; transform: translateY(100px); opacity: 0;
+      transition: transform var(--transition), opacity var(--transition);
+    }
+    .notification.show { transform: translateY(0); opacity: 1; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .booking-wrapper { grid-template-columns: 1fr; gap: 3rem; }
+      .contact-wrapper { grid-template-columns: 1fr; gap: 3rem; }
+      .carousel-slide { min-width: calc(50% - 1px); }
+      .form-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      section { padding: 80px 5%; }
+      .carousel-slide { min-width: 100%; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      #reservas::before { display: none; }
     }
   </style>
 </head>
+<body>
+  <!-- CURSOR -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
 
-<body class="bg-gray-50 text-gray-800">
+  <!-- NAV -->
+  <nav id="mainNav">
+    <a href="#inicio" class="nav-logo">NO<span>B</span>LE</a>
+    <ul class="nav-links">
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#galeria">Galería</a></li>
+      <li><a href="#equipo">Equipo</a></li>
+      <li><a href="#testimonios">Reseñas</a></li>
+      <li><a href="#blog">Blog</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+      <li><a href="#reservas" class="nav-cta">Reservar</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
 
-<!-- 🔥 HERO -->
-<section class="bg-gradient-to-r from-primary to-secondary text-white py-20 text-center fade-in">
-  <h1 class="text-4xl md:text-5xl font-bold mb-4">Haz crecer tu negocio</h1>
-  <p class="text-lg mb-6">Más clientes, más ventas, más presencia online</p>
-  <a href="#" class="btn-primary px-6 py-3 rounded-xl font-semibold shadow-lg">
-    Contáctanos
-  </a>
-</section>
-
-<!-- 💡 BENEFICIOS -->
-<section class="py-16 px-6">
-  <h2 class="text-3xl font-bold text-center mb-10">¿Por qué elegirnos?</h2>
-
-  <div class="grid md:grid-cols-3 gap-6">
-    <div class="bg-white p-6 rounded-xl shadow-md card-hover fade-in">
-      <h3 class="font-bold text-xl mb-2">Rápido</h3>
-      <p>Tu página lista en pocos días</p>
-    </div>
-
-    <div class="bg-white p-6 rounded-xl shadow-md card-hover fade-in">
-      <h3 class="font-bold text-xl mb-2">Profesional</h3>
-      <p>Diseño moderno que genera confianza</p>
-    </div>
-
-    <div class="bg-white p-6 rounded-xl shadow-md card-hover fade-in">
-      <h3 class="font-bold text-xl mb-2">Efectivo</h3>
-      <p>Optimizado para conseguir clientes</p>
-    </div>
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="close-menu" id="closeMenu">✕</button>
+    <a href="#servicios" class="mm-link">Servicios</a>
+    <a href="#galeria" class="mm-link">Galería</a>
+    <a href="#equipo" class="mm-link">Equipo</a>
+    <a href="#testimonios" class="mm-link">Reseñas</a>
+    <a href="#blog" class="mm-link">Blog</a>
+    <a href="#contacto" class="mm-link">Contacto</a>
+    <a href="#reservas" class="mm-link">Reservar</a>
   </div>
-</section>
 
-<!-- 🛠 SERVICIOS -->
-<section class="bg-gray-100 py-16 px-6">
-  <h2 class="text-3xl font-bold text-center mb-10">Nuestros servicios</h2>
-
-  <div class="grid md:grid-cols-3 gap-6">
-    <div class="p-6 bg-white rounded-xl shadow-md text-center card-hover">
-      <h3 class="font-bold text-xl mb-2">Landing Pages</h3>
-      <p>Páginas diseñadas para vender</p>
+  <!-- HERO -->
+  <section id="inicio">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Barbería de Élite · Desde 2010</p>
+      <h1 class="hero-title">El Arte<br />de <em>lucir</em><br />perfecto</h1>
+      <p class="hero-subtitle">Cortes precisos. Estilo atemporal. Experiencia incomparable.</p>
+      <div class="hero-actions">
+        <a href="#reservas" class="btn-primary">Reserva tu cita</a>
+        <a href="#servicios" class="btn-outline">Ver servicios</a>
+      </div>
     </div>
-
-    <div class="p-6 bg-white rounded-xl shadow-md text-center card-hover">
-      <h3 class="font-bold text-xl mb-2">Diseño Web</h3>
-      <p>Presencia profesional en internet</p>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
     </div>
+  </section>
 
-    <div class="p-6 bg-white rounded-xl shadow-md text-center card-hover">
-      <h3 class="font-bold text-xl mb-2">Optimización</h3>
-      <p>Mejoramos tu conversión</p>
+  <!-- SERVICIOS -->
+  <section id="servicios">
+    <div class="services-header reveal">
+      <span class="section-label">Lo que ofrecemos</span>
+      <h2 class="section-title">Servicios<br />de primera clase</h2>
+      <div class="divider"></div>
+      <p class="section-intro">Cada servicio es un ritual. Utilizamos productos de primera línea y técnicas refinadas para garantizar resultados excepcionales.</p>
     </div>
-  </div>
-</section>
-
-<!-- ⭐ TESTIMONIOS -->
-<section class="py-16 px-6">
-  <h2 class="text-3xl font-bold text-center mb-10">Lo que dicen nuestros clientes</h2>
-
-  <div class="grid md:grid-cols-2 gap-6">
-    <div class="bg-white p-6 rounded-xl shadow-md card-hover">
-      <p>"Mi negocio creció gracias a la página web"</p>
-      <span class="block mt-4 font-bold">- Cliente 1</span>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <span class="service-icon">✂️</span>
+        <h3 class="service-name">Corte Clásico</h3>
+        <p class="service-desc">Corte personalizado adaptado a tu estructura facial. Incluye lavado, corte con tijera o máquina, y peinado final.</p>
+        <span class="service-price">Q75</span>
+      </div>
+      <div class="service-card reveal">
+        <span class="service-icon">🪒</span>
+        <h3 class="service-name">Afeitado Clásico</h3>
+        <p class="service-desc">Afeitado tradicional con navaja recta, vapor caliente y toalla. Una experiencia de lujo que cuida tu piel.</p>
+        <span class="service-price">Q90</span>
+      </div>
+      <div class="service-card reveal">
+        <span class="service-icon">🧔</span>
+        <h3 class="service-name">Arreglo de Barba</h3>
+        <p class="service-desc">Perfilado y diseño de barba con precisión milimétrica. Definición de líneas y aplicación de aceites esenciales.</p>
+        <span class="service-price">Q60</span>
+      </div>
+      <div class="service-card reveal">
+        <span class="service-icon">💆</span>
+        <h3 class="service-name">Tratamiento Capilar</h3>
+        <p class="service-desc">Hidratación profunda y fortalecimiento del cabello con mascarillas premium. Ideal para cabellos secos o dañados.</p>
+        <span class="service-price">Q120</span>
+      </div>
+      <div class="service-card reveal">
+        <span class="service-icon">💈</span>
+        <h3 class="service-name">Combo Premium</h3>
+        <p class="service-desc">Corte + barba + tratamiento capilar. La experiencia completa NOBLE para lucir impecable de pies a cabeza.</p>
+        <span class="service-price">Q200</span>
+      </div>
+      <div class="service-card reveal">
+        <span class="service-icon">🌿</span>
+        <h3 class="service-name">Coloración</h3>
+        <p class="service-desc">Tinte, mechas o cobertura de canas con productos de alta gama. Color natural y duradero que cuida cada hebra.</p>
+        <span class="service-price">Desde Q150</span>
+      </div>
     </div>
+  </section>
 
-    <div class="bg-white p-6 rounded-xl shadow-md card-hover">
-      <p>"Más clientes desde el primer mes"</p>
-      <span class="block mt-4 font-bold">- Cliente 2</span>
+  <!-- GALERÍA -->
+  <section id="galeria">
+    <div class="gallery-header reveal">
+      <span class="section-label">Nuestro trabajo</span>
+      <h2 class="section-title light">Galería &<br />Portfolio</h2>
+      <div class="divider"></div>
+      <p class="section-intro">Cada imagen cuenta la historia de un cliente satisfecho. La excelencia en cada detalle.</p>
     </div>
-  </div>
-</section>
+    <div class="carousel-wrapper">
+      <div class="carousel-track" id="carouselTrack">
+        <div class="carousel-slide">
+          <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=600&q=80" alt="Corte clásico" />
+          <div class="carousel-slide-overlay"><span class="carousel-slide-label">Corte Clásico</span></div>
+        </div>
+        <div class="carousel-slide">
+          <img src="https://images.unsplash.com/photo-1560264280-88b68371db39?w=600&q=80" alt="Barba" />
+          <div class="carousel-slide-overlay"><span class="carousel-slide-label">Arreglo de Barba</span></div>
+        </div>
+        <div class="carousel-slide">
+          <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=600&q=80" alt="Afeitado" />
+          <div class="carousel-slide-overlay"><span class="carousel-slide-label">Afeitado Clásico</span></div>
+        </div>
+        <div class="carousel-slide">
+          <img src="https://images.unsplash.com/photo-1521490683712-35a1cb235d1c?w=600&q=80" alt="Fade" />
+          <div class="carousel-slide-overlay"><span class="carousel-slide-label">Fade Moderno</span></div>
+        </div>
+        <div class="carousel-slide">
+          <img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=600&q=80" alt="Barbería" />
+          <div class="carousel-slide-overlay"><span class="carousel-slide-label">Ambiente Noble</span></div>
+        </div>
+        <div class="carousel-slide">
+          <img src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?w=600&q=80" alt="Cabello" />
+          <div class="carousel-slide-overlay"><span class="carousel-slide-label">Tratamiento Premium</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-controls">
+      <button class="carousel-btn" id="prevBtn">&#8592;</button>
+      <div class="carousel-dots" id="dots"></div>
+      <button class="carousel-btn" id="nextBtn">&#8594;</button>
+    </div>
+  </section>
 
-<!-- 🚀 CTA -->
-<section class="bg-primary text-white py-16 text-center">
-  <h2 class="text-3xl font-bold mb-4">¿Listo para crecer?</h2>
-  <p class="mb-6">Contáctanos hoy mismo</p>
-  <a href="#" class="bg-white text-primary px-6 py-3 rounded-xl font-semibold shadow-md hover:bg-gray-100">
-    Escríbenos
-  </a>
-</section>
+  <!-- EQUIPO -->
+  <section id="equipo">
+    <div class="team-header reveal">
+      <span class="section-label">Nuestros expertos</span>
+      <h2 class="section-title">El equipo<br />NOBLE</h2>
+      <div class="divider"></div>
+      <p class="section-intro">Barberos apasionados con años de experiencia. Cada uno con su propio estilo, todos comprometidos con la excelencia.</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card reveal">
+        <div class="team-img-wrap">
+          <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80" alt="Carlos Mendoza" />
+          <div class="team-img-overlay">
+            <a href="#" class="team-social">in</a>
+            <a href="#" class="team-social">ig</a>
+          </div>
+        </div>
+        <h3 class="team-name">Carlos Mendoza</h3>
+        <p class="team-role">Master Barbero · Fundador</p>
+        <p class="team-bio">15 años perfeccionando el arte del corte. Especialista en barbas voluminosas y cortes clásicos europeos.</p>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-img-wrap">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80" alt="Diego Ruiz" />
+          <div class="team-img-overlay">
+            <a href="#" class="team-social">in</a>
+            <a href="#" class="team-social">ig</a>
+          </div>
+        </div>
+        <h3 class="team-name">Diego Ruiz</h3>
+        <p class="team-role">Senior Barbero</p>
+        <p class="team-bio">Experto en fades y cortes modernos. Formado en Barcelona con certificación internacional en técnicas de coloración.</p>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-img-wrap">
+          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80" alt="Andrés López" />
+          <div class="team-img-overlay">
+            <a href="#" class="team-social">in</a>
+            <a href="#" class="team-social">ig</a>
+          </div>
+        </div>
+        <h3 class="team-name">Andrés López</h3>
+        <p class="team-role">Barbero & Estilista</p>
+        <p class="team-bio">Maestro del afeitado clásico y tratamientos capilares. Su toque suave y preciso lo convierte en favorito de nuestros clientes.</p>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-img-wrap">
+          <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&q=80" alt="Marco Herrera" />
+          <div class="team-img-overlay">
+            <a href="#" class="team-social">in</a>
+            <a href="#" class="team-social">ig</a>
+          </div>
+        </div>
+        <h3 class="team-name">Marco Herrera</h3>
+        <p class="team-role">Barbero Junior</p>
+        <p class="team-bio">Joven talento con dominio de las últimas tendencias. Especializado en cortes urbanos y diseños creativos.</p>
+      </div>
+    </div>
+  </section>
 
-<!-- 📞 FOOTER -->
-<footer class="bg-gray-900 text-white py-6 text-center">
-  <p>© 2026 Tu Negocio - Todos los derechos reservados</p>
-</footer>
+  <!-- RESERVAS -->
+  <section id="reservas">
+    <div class="booking-wrapper">
+      <div class="booking-info reveal">
+        <span class="section-label">Agenda tu visita</span>
+        <h2 class="section-title">Reserva<br /><em style="font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--gold-light);">tu cita</em></h2>
+        <div class="divider"></div>
+        <p class="section-intro">Reserva en minutos y garantiza tu lugar con nuestros barberos. Sin esperas innecesarias.</p>
+        <div class="booking-features">
+          <div class="booking-feature">
+            <div class="feature-dot"></div>
+            <p class="feature-text">Confirmación inmediata por correo electrónico</p>
+          </div>
+          <div class="booking-feature">
+            <div class="feature-dot"></div>
+            <p class="feature-text">Cancela o reagenda con hasta 2 horas de anticipación</p>
+          </div>
+          <div class="booking-feature">
+            <div class="feature-dot"></div>
+            <p class="feature-text">Elige tu barbero de preferencia</p>
+          </div>
+          <div class="booking-feature">
+            <div class="feature-dot"></div>
+            <p class="feature-text">Pago al finalizar el servicio, sin cobros anticipados</p>
+          </div>
+        </div>
+      </div>
+      <form class="booking-form reveal" id="bookingForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="nombre">Nombre completo</label>
+            <input type="text" id="nombre" placeholder="Tu nombre" required />
+          </div>
+          <div class="form-group">
+            <label for="telefono">Teléfono</label>
+            <input type="tel" id="telefono" placeholder="+502 0000 0000" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="correo">Correo electrónico</label>
+          <input type="email" id="correo" placeholder="correo@ejemplo.com" required />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="servicio">Servicio</label>
+            <select id="servicio">
+              <option value="">Seleccionar servicio</option>
+              <option>Corte Clásico — Q75</option>
+              <option>Afeitado Clásico — Q90</option>
+              <option>Arreglo de Barba — Q60</option>
+              <option>Tratamiento Capilar — Q120</option>
+              <option>Combo Premium — Q200</option>
+              <option>Coloración — desde Q150</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="barbero">Barbero</label>
+            <select id="barbero">
+              <option value="">Sin preferencia</option>
+              <option>Carlos Mendoza</option>
+              <option>Diego Ruiz</option>
+              <option>Andrés López</option>
+              <option>Marco Herrera</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fecha">Fecha</label>
+            <input type="date" id="fecha" />
+          </div>
+          <div class="form-group">
+            <label for="hora">Hora</label>
+            <select id="hora">
+              <option value="">Seleccionar hora</option>
+              <option>09:00</option><option>09:30</option>
+              <option>10:00</option><option>10:30</option>
+              <option>11:00</option><option>11:30</option>
+              <option>12:00</option><option>12:30</option>
+              <option>14:00</option><option>14:30</option>
+              <option>15:00</option><option>15:30</option>
+              <option>16:00</option><option>16:30</option>
+              <option>17:00</option><option>17:30</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="notas">Notas adicionales</label>
+          <textarea id="notas" placeholder="Instrucciones especiales o comentarios..."></textarea>
+        </div>
+        <button type="submit" class="btn-form">Confirmar reserva →</button>
+      </form>
+    </div>
+  </section>
 
+  <!-- TESTIMONIOS -->
+  <section id="testimonios">
+    <div class="testimonials-header reveal">
+      <span class="section-label">Lo que dicen</span>
+      <h2 class="section-title">Clientes que<br />confían en NOBLE</h2>
+      <div class="divider center"></div>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card reveal">
+        <div class="testimonial-quote">"</div>
+        <p class="testimonial-text">El mejor corte que he tenido en mi vida. Carlos entendió exactamente lo que quería sin que tuviera que explicar demasiado. Profesionalismo total.</p>
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-author">
+          <img src="https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=100&q=80" alt="Roberto" class="author-avatar" />
+          <div>
+            <p class="author-name">Roberto Castillo</p>
+            <p class="author-since">Cliente desde 2021</p>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal">
+        <div class="testimonial-quote">"</div>
+        <p class="testimonial-text">El ambiente es increíble, la atención es de primera. Vine por el afeitado clásico y no puedo dejar de volver. Una experiencia que recomiendo a todos.</p>
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-author">
+          <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=100&q=80" alt="Alejandro" class="author-avatar" />
+          <div>
+            <p class="author-name">Alejandro Morales</p>
+            <p class="author-since">Cliente desde 2020</p>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal">
+        <div class="testimonial-quote">"</div>
+        <p class="testimonial-text">Diego transformó mi barba por completo. Es un artista. Puntual, prolijo y con un ojo increíble para el detalle. NOBLE es la única barbería que pisaré.</p>
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-author">
+          <img src="https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?w=100&q=80" alt="Fernando" class="author-avatar" />
+          <div>
+            <p class="author-name">Fernando Vásquez</p>
+            <p class="author-since">Cliente desde 2022</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOG -->
+  <section id="blog">
+    <div class="blog-header reveal">
+      <span class="section-label">Consejos & Tendencias</span>
+      <h2 class="section-title">Blog &<br />Tips NOBLE</h2>
+      <div class="divider"></div>
+      <p class="section-intro">Cuida tu imagen más allá de la barbería. Guías, tendencias y secretos de nuestros expertos.</p>
+    </div>
+    <div class="blog-grid">
+      <article class="blog-card reveal">
+        <div class="blog-img-wrap">
+          <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=700&q=80" alt="Blog 1" class="blog-img" />
+        </div>
+        <span class="blog-category">Cuidado personal</span>
+        <h3 class="blog-title">Cómo mantener tu barba hidratada en temporada seca</h3>
+        <p class="blog-excerpt">La falta de humedad puede arruinar hasta la barba mejor cuidada. Te enseñamos los productos y rutinas esenciales para mantenerla impecable.</p>
+        <a href="#" class="blog-link">Leer artículo →</a>
+      </article>
+      <article class="blog-card reveal">
+        <div class="blog-img-wrap">
+          <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=700&q=80" alt="Blog 2" class="blog-img" />
+        </div>
+        <span class="blog-category">Tendencias 2025</span>
+        <h3 class="blog-title">Los 5 cortes más solicitados esta temporada en NOBLE</h3>
+        <p class="blog-excerpt">Del buzz cut al textured crop, descubre los estilos que están dominando nuestras sillas y cómo saber cuál te favorece más.</p>
+        <a href="#" class="blog-link">Leer artículo →</a>
+      </article>
+      <article class="blog-card reveal">
+        <div class="blog-img-wrap">
+          <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=700&q=80" alt="Blog 3" class="blog-img" />
+        </div>
+        <span class="blog-category">Ritual matutino</span>
+        <h3 class="blog-title">El ritual perfecto de 5 minutos para lucir increíble cada día</h3>
+        <p class="blog-excerpt">No necesitas horas frente al espejo. Con los productos correctos y una rutina simple, puedes verte como recién salido de la barbería.</p>
+        <a href="#" class="blog-link">Leer artículo →</a>
+      </article>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto">
+    <div class="contact-wrapper">
+      <div class="contact-info reveal">
+        <span class="section-label">Encuéntranos</span>
+        <h2 class="section-title" style="color:var(--white)">Contacto &<br />Ubicación</h2>
+        <div class="divider"></div>
+        <div class="contact-items">
+          <div class="contact-item">
+            <div class="contact-icon">📍</div>
+            <div>
+              <p class="contact-item-title">Dirección</p>
+              <p class="contact-item-text">6a Avenida 12-35, Zona 10<br />Ciudad de Guatemala, Guatemala</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📞</div>
+            <div>
+              <p class="contact-item-title">Teléfono</p>
+              <p class="contact-item-text">+502 2345-6789<br />+502 5555-0000 (WhatsApp)</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">✉️</div>
+            <div>
+              <p class="contact-item-title">Correo</p>
+              <p class="contact-item-text">hola@noblebarberia.gt<br />reservas@noblebarberia.gt</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">🕐</div>
+            <div>
+              <p class="contact-item-title">Horarios</p>
+              <p class="contact-item-text">Lunes – Viernes: 9:00 – 19:00<br />Sábado: 8:00 – 18:00<br />Domingo: 9:00 – 14:00</p>
+            </div>
+          </div>
+        </div>
+        <div class="social-row">
+          <a href="#" class="social-link" title="Instagram">ig</a>
+          <a href="#" class="social-link" title="Facebook">fb</a>
+          <a href="#" class="social-link" title="TikTok">tt</a>
+          <a href="#" class="social-link" title="WhatsApp">wp</a>
+          <a href="#" class="social-link" title="YouTube">yt</a>
+        </div>
+      </div>
+      <div class="map-container reveal">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.1!2d-90.5067!3d14.6032!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTTCsDM2JzExLjUiTiA5MMKwMzAnMjQuMSJX!5e0!3m2!1ses!2sgt!4v1234567890"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Ubicación NOBLE Barbería"
+        ></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">NO<span>B</span>LE</div>
+      <p class="footer-copy">© 2025 NOBLE Barbería de Élite · Todos los derechos reservados · Hecho con precisión en Guatemala</p>
+      <div class="footer-links">
+        <a href="#">Privacidad</a>
+        <a href="#">Términos</a>
+        <a href="#reservas">Reservar</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- NOTIFICATION -->
+  <div class="notification" id="notification">✓ ¡Cita solicitada con éxito! Te contactaremos pronto.</div>
+
+  <script>
+    // CURSOR
+    const cursor = document.getElementById('cursor');
+    const follower = document.getElementById('cursorFollower');
+    let mouseX = 0, mouseY = 0, followerX = 0, followerY = 0;
+    document.addEventListener('mousemove', e => {
+      mouseX = e.clientX; mouseY = e.clientY;
+      cursor.style.left = mouseX + 'px';
+      cursor.style.top = mouseY + 'px';
+    });
+    function animateFollower() {
+      followerX += (mouseX - followerX) * 0.1;
+      followerY += (mouseY - followerY) * 0.1;
+      follower.style.left = followerX + 'px';
+      follower.style.top = followerY + 'px';
+      requestAnimationFrame(animateFollower);
+    }
+    animateFollower();
+    document.querySelectorAll('a, button, input, select, textarea, .service-card, .team-card, .blog-card').forEach(el => {
+      el.addEventListener('mouseenter', () => { cursor.classList.add('hover'); follower.classList.add('hover'); });
+      el.addEventListener('mouseleave', () => { cursor.classList.remove('hover'); follower.classList.remove('hover'); });
+    });
+
+    // NAV SCROLL
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // MOBILE MENU
+    document.getElementById('hamburger').addEventListener('click', () => {
+      document.getElementById('mobileMenu').classList.add('open');
+    });
+    document.getElementById('closeMenu').addEventListener('click', () => {
+      document.getElementById('mobileMenu').classList.remove('open');
+    });
+    document.querySelectorAll('.mm-link').forEach(link => {
+      link.addEventListener('click', () => document.getElementById('mobileMenu').classList.remove('open'));
+    });
+
+    // CAROUSEL
+    const track = document.getElementById('carouselTrack');
+    const slides = track.querySelectorAll('.carousel-slide');
+    const dotsContainer = document.getElementById('dots');
+    let currentSlide = 0;
+    const slidesPerView = () => window.innerWidth < 600 ? 1 : window.innerWidth < 900 ? 2 : 3;
+
+    function initDots() {
+      dotsContainer.innerHTML = '';
+      const total = slides.length - slidesPerView() + 1;
+      for (let i = 0; i < Math.max(total, 1); i++) {
+        const d = document.createElement('div');
+        d.className = 'dot' + (i === 0 ? ' active' : '');
+        d.addEventListener('click', () => goTo(i));
+        dotsContainer.appendChild(d);
+      }
+    }
+
+    function goTo(n) {
+      const max = slides.length - slidesPerView();
+      currentSlide = Math.min(Math.max(n, 0), max);
+      const slideWidth = slides[0].offsetWidth + 2;
+      track.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
+      dotsContainer.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === currentSlide));
+    }
+
+    document.getElementById('prevBtn').addEventListener('click', () => goTo(currentSlide - 1));
+    document.getElementById('nextBtn').addEventListener('click', () => goTo(currentSlide + 1));
+    window.addEventListener('resize', () => { initDots(); goTo(0); });
+    initDots();
+
+    // AUTO CAROUSEL
+    setInterval(() => {
+      const max = slides.length - slidesPerView();
+      goTo(currentSlide >= max ? 0 : currentSlide + 1);
+    }, 4000);
+
+    // REVEAL ON SCROLL
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    reveals.forEach(el => observer.observe(el));
+
+    // FORM
+    document.getElementById('bookingForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const btn = this.querySelector('.btn-form');
+      btn.textContent = 'Enviando...';
+      btn.disabled = true;
+      setTimeout(() => {
+        this.reset();
+        btn.textContent = 'Confirmar reserva →';
+        btn.disabled = false;
+        const notif = document.getElementById('notification');
+        notif.classList.add('show');
+        setTimeout(() => notif.classList.remove('show'), 4000);
+      }, 1500);
+    });
+
+    // DATE MIN
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('fecha').min = today;
+  </script>
 </body>
 </html>
