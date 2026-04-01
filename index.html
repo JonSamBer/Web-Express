@@ -1,186 +1,158 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Barbería Minimalista</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Archivo CSS externo -->
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tu Negocio</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Configuración Tailwind -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2563eb',
+            secondary: '#7c3aed',
+            accent: '#06b6d4'
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Fuente -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- CSS personalizado -->
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    .fade-in {
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card-hover:hover {
+      transform: translateY(-5px);
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(to right, #2563eb, #7c3aed);
+      color: white;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.9;
+      transform: scale(1.05);
+    }
+  </style>
 </head>
-<body>
 
-    <!-- Header / Navegación -->
-    <header>
-        <div class="logo">
-            <h1>Barbería Minimalista</h1>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="#home">Inicio</a></li>
-                <li><a href="#services">Servicios</a></li>
-                <li><a href="#gallery">Galería</a></li>
-                <li><a href="#team">Equipo</a></li>
-                <li><a href="#booking">Reservas</a></li>
-                <li><a href="#testimonials">Testimonios</a></li>
-                <li><a href="#contact">Contacto</a></li>
-                <li><a href="#blog">Blog</a></li>
-            </ul>
-        </nav>
-    </header>
+<body class="bg-gray-50 text-gray-800">
 
-    <!-- Inicio / Home -->
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <h2>Bienvenido a Barbería Minimalista</h2>
-            <p>Donde estilo y elegancia se encuentran.</p>
-            <a href="#booking" class="cta-button">Reserva tu cita</a>
-        </div>
-    </section>
+<!-- 🔥 HERO -->
+<section class="bg-gradient-to-r from-primary to-secondary text-white py-20 text-center fade-in">
+  <h1 class="text-4xl md:text-5xl font-bold mb-4">Haz crecer tu negocio</h1>
+  <p class="text-lg mb-6">Más clientes, más ventas, más presencia online</p>
+  <a href="#" class="btn-primary px-6 py-3 rounded-xl font-semibold shadow-lg">
+    Contáctanos
+  </a>
+</section>
 
-    <!-- Servicios -->
-    <section id="services">
-        <h2>Servicios</h2>
-        <div class="services-grid">
-            <article class="service-item">
-                <img src="icon-corte.svg" alt="Corte de Cabello">
-                <h3>Corte de Cabello</h3>
-                <p>Descripción breve del servicio.</p>
-                <span class="price">$25</span>
-            </article>
-            <article class="service-item">
-                <img src="icon-afeitado.svg" alt="Afeitado Clásico">
-                <h3>Afeitado Clásico</h3>
-                <p>Descripción breve del servicio.</p>
-                <span class="price">$20</span>
-            </article>
-            <article class="service-item">
-                <img src="icon-barba.svg" alt="Arreglo de Barba">
-                <h3>Arreglo de Barba</h3>
-                <p>Descripción breve del servicio.</p>
-                <span class="price">$15</span>
-            </article>
-            <article class="service-item">
-                <img src="icon-tratamiento.svg" alt="Tratamientos Capilares">
-                <h3>Tratamientos Capilares</h3>
-                <p>Descripción breve del servicio.</p>
-                <span class="price">$30</span>
-            </article>
-        </div>
-    </section>
+<!-- 💡 BENEFICIOS -->
+<section class="py-16 px-6">
+  <h2 class="text-3xl font-bold text-center mb-10">¿Por qué elegirnos?</h2>
 
-    <!-- Galería / Portfolio -->
-    <section id="gallery">
-        <h2>Galería</h2>
-        <div class="gallery-carousel">
-            <!-- Imágenes de cortes y estilos -->
-            <img src="galeria1.jpg" alt="Corte 1">
-            <img src="galeria2.jpg" alt="Corte 2">
-            <img src="galeria3.jpg" alt="Corte 3">
-        </div>
-    </section>
+  <div class="grid md:grid-cols-3 gap-6">
+    <div class="bg-white p-6 rounded-xl shadow-md card-hover fade-in">
+      <h3 class="font-bold text-xl mb-2">Rápido</h3>
+      <p>Tu página lista en pocos días</p>
+    </div>
 
-    <!-- Equipo -->
-    <section id="team">
-        <h2>Equipo</h2>
-        <div class="team-grid">
-            <article class="team-member">
-                <img src="barbero1.jpg" alt="Nombre del Barbero">
-                <h3>Juan Pérez</h3>
-                <p>Especialista en cortes modernos y afeitados clásicos.</p>
-            </article>
-            <article class="team-member">
-                <img src="barbero2.jpg" alt="Nombre del Barbero">
-                <h3>Pedro Gómez</h3>
-                <p>Experto en arreglo de barba y estilismo personalizado.</p>
-            </article>
-        </div>
-    </section>
+    <div class="bg-white p-6 rounded-xl shadow-md card-hover fade-in">
+      <h3 class="font-bold text-xl mb-2">Profesional</h3>
+      <p>Diseño moderno que genera confianza</p>
+    </div>
 
-    <!-- Reservas / Booking -->
-    <section id="booking">
-        <h2>Reserva tu Cita</h2>
-        <form action="#" method="POST">
-            <label for="name">Nombre</label>
-            <input type="text" id="name" name="name" required>
+    <div class="bg-white p-6 rounded-xl shadow-md card-hover fade-in">
+      <h3 class="font-bold text-xl mb-2">Efectivo</h3>
+      <p>Optimizado para conseguir clientes</p>
+    </div>
+  </div>
+</section>
 
-            <label for="email">Correo Electrónico</label>
-            <input type="email" id="email" name="email" required>
+<!-- 🛠 SERVICIOS -->
+<section class="bg-gray-100 py-16 px-6">
+  <h2 class="text-3xl font-bold text-center mb-10">Nuestros servicios</h2>
 
-            <label for="phone">Teléfono</label>
-            <input type="tel" id="phone" name="phone" required>
+  <div class="grid md:grid-cols-3 gap-6">
+    <div class="p-6 bg-white rounded-xl shadow-md text-center card-hover">
+      <h3 class="font-bold text-xl mb-2">Landing Pages</h3>
+      <p>Páginas diseñadas para vender</p>
+    </div>
 
-            <label for="service">Servicio</label>
-            <select id="service" name="service">
-                <option value="corte">Corte de Cabello</option>
-                <option value="afeitado">Afeitado Clásico</option>
-                <option value="barba">Arreglo de Barba</option>
-                <option value="tratamiento">Tratamiento Capilar</option>
-            </select>
+    <div class="p-6 bg-white rounded-xl shadow-md text-center card-hover">
+      <h3 class="font-bold text-xl mb-2">Diseño Web</h3>
+      <p>Presencia profesional en internet</p>
+    </div>
 
-            <label for="date">Fecha y Hora</label>
-            <input type="datetime-local" id="date" name="date" required>
+    <div class="p-6 bg-white rounded-xl shadow-md text-center card-hover">
+      <h3 class="font-bold text-xl mb-2">Optimización</h3>
+      <p>Mejoramos tu conversión</p>
+    </div>
+  </div>
+</section>
 
-            <button type="submit" class="cta-button">Agendar Cita</button>
-        </form>
-    </section>
+<!-- ⭐ TESTIMONIOS -->
+<section class="py-16 px-6">
+  <h2 class="text-3xl font-bold text-center mb-10">Lo que dicen nuestros clientes</h2>
 
-    <!-- Testimonios -->
-    <section id="testimonials">
-        <h2>Testimonios</h2>
-        <div class="testimonials-slider">
-            <blockquote>
-                <p>"Excelente servicio y atención profesional."</p>
-                <footer>- Carlos M.</footer>
-            </blockquote>
-            <blockquote>
-                <p>"Mi corte nunca había quedado tan perfecto. ¡Recomendado!"</p>
-                <footer>- Luis A.</footer>
-            </blockquote>
-        </div>
-    </section>
+  <div class="grid md:grid-cols-2 gap-6">
+    <div class="bg-white p-6 rounded-xl shadow-md card-hover">
+      <p>"Mi negocio creció gracias a la página web"</p>
+      <span class="block mt-4 font-bold">- Cliente 1</span>
+    </div>
 
-    <!-- Contacto / Ubicación -->
-    <section id="contact">
-        <h2>Contacto</h2>
-        <div class="contact-info">
-            <p>Dirección: Calle Principal 123, Ciudad</p>
-            <p>Teléfono: +502 1234 5678</p>
-            <p>Email: contacto@barberiaminimalista.com</p>
-            <p>Horario: Lunes a Sábado 9:00 - 19:00</p>
-        </div>
-        <div class="map">
-            <!-- Aquí se puede insertar un iframe de Google Maps -->
-        </div>
-        <div class="social-media">
-            <a href="#">Instagram</a>
-            <a href="#">Facebook</a>
-        </div>
-    </section>
+    <div class="bg-white p-6 rounded-xl shadow-md card-hover">
+      <p>"Más clientes desde el primer mes"</p>
+      <span class="block mt-4 font-bold">- Cliente 2</span>
+    </div>
+  </div>
+</section>
 
-    <!-- Blog / Tips -->
-    <section id="blog">
-        <h2>Blog & Tips</h2>
-        <div class="blog-grid">
-            <article class="blog-post">
-                <h3>Consejo de Cuidado Capilar</h3>
-                <p>Mini descripción del tip o artículo.</p>
-            </article>
-            <article class="blog-post">
-                <h3>Estilos Modernos de Barba</h3>
-                <p>Mini descripción del tip o artículo.</p>
-            </article>
-        </div>
-    </section>
+<!-- 🚀 CTA -->
+<section class="bg-primary text-white py-16 text-center">
+  <h2 class="text-3xl font-bold mb-4">¿Listo para crecer?</h2>
+  <p class="mb-6">Contáctanos hoy mismo</p>
+  <a href="#" class="bg-white text-primary px-6 py-3 rounded-xl font-semibold shadow-md hover:bg-gray-100">
+    Escríbenos
+  </a>
+</section>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2026 Barbería Minimalista. Todos los derechos reservados.</p>
-        <div class="footer-social">
-            <a href="#">Instagram</a>
-            <a href="#">Facebook</a>
-        </div>
-    </footer>
+<!-- 📞 FOOTER -->
+<footer class="bg-gray-900 text-white py-6 text-center">
+  <p>© 2026 Tu Negocio - Todos los derechos reservados</p>
+</footer>
 
 </body>
 </html>
